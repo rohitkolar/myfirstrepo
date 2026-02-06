@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Media Type - Step 2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #FFF8E7 0%, #FAF0E6 50%, #FFE8E8 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .floating-icon {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.15;
+            animation: float 15s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        .heart1 { left: 10%; top: 20%; animation-delay: 0s; }
+        .heart2 { left: 80%; top: 15%; animation-delay: 2s; font-size: 2.5rem; }
+        .heart3 { left: 15%; top: 70%; animation-delay: 4s; }
+        .gift1 { left: 70%; top: 60%; animation-delay: 1s; font-size: 2.2rem; }
+        .gift2 { left: 25%; top: 40%; animation-delay: 3s; }
+        .teddy1 { left: 85%; top: 80%; animation-delay: 2.5s; }
+        .teddy2 { left: 5%; top: 50%; animation-delay: 1.5s; font-size: 2.3rem; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-30px) rotate(5deg); }
+            50% { transform: translateY(-60px) rotate(-5deg); }
+            75% { transform: translateY(-30px) rotate(3deg); }
+        }
+
+        .container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 20px 60px rgba(128, 0, 32, 0.15);
+            max-width: 600px;
+            width: 100%;
+            border: 1px solid rgba(232, 180, 184, 0.3);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #800020;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #A0153E;
+            margin-bottom: 2.5rem;
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+
+        .media-buttons {
+            display: grid;
+            gap: 1.25rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .media-btn {
+            padding: 1.75rem 2rem;
+            border: 2px solid #E8B4B8;
+            border-radius: 16px;
+            background: rgba(255, 248, 231, 0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .media-btn:hover {
+            background: rgba(232, 180, 184, 0.3);
+            border-color: #B76E79;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(183, 110, 121, 0.2);
+        }
+
+        .media-btn.selected {
+            background: linear-gradient(135deg, rgba(160, 21, 62, 0.1) 0%, rgba(128, 0, 32, 0.1) 100%);
+            border-color: #A0153E;
+            border-width: 3px;
+        }
+
+        .media-icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .media-content {
+            flex: 1;
+            text-align: left;
+        }
+
+        .media-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #800020;
+            margin-bottom: 0.25rem;
+        }
+
+        .media-desc {
+            font-size: 0.85rem;
+            color: #B76E79;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2.5rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.3s, background 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #A0153E 0%, #800020 100%);
+            color: #FFF8E7;
+            box-shadow: 0 4px 15px rgba(160, 21, 62, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(160, 21, 62, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: rgba(232, 180, 184, 0.4);
+            color: #800020;
+            border: 2px solid #E8B4B8;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(232, 180, 184, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .step-indicator {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #B76E79;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        @media (max-width: 640px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .form-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .media-btn {
+                padding: 1.25rem 1.5rem;
+            }
+
+            .media-icon {
+                font-size: 2rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Valentine Icons -->
+    <div class="floating-icon heart1">❤️</div>
+    <div class="floating-icon heart2">💕</div>
+    <div class="floating-icon heart3">💖</div>
+    <div class="floating-icon gift1">🎁</div>
+    <div class="floating-icon gift2">🎀</div>
+    <div class="floating-icon teddy1">🧸</div>
+    <div class="floating-icon teddy2">🧸</div>
+
+    <div class="container">
+        <div class="form-card">
+            <div class="step-indicator">Step 2 of 4</div>
+            <h1>Add a Special Touch</h1>
+            <p class="subtitle">Choose a media type to share your love</p>
+
+            <div class="media-buttons">
+                <div class="media-btn" data-type="image">
+                    <div class="media-icon">🖼️</div>
+                    <div class="media-content">
+                        <div class="media-title">Add Image</div>
+                        <div class="media-desc">Share a beautiful photo or picture</div>
+                    </div>
+                </div>
+
+                <div class="media-btn" data-type="video">
+                    <div class="media-icon">🎥</div>
+                    <div class="media-content">
+                        <div class="media-title">Add Video</div>
+                        <div class="media-desc">Upload a memorable video clip</div>
+                    </div>
+                </div>
+
+                <div class="media-btn" data-type="audio">
+                    <div class="media-icon">🎵</div>
+                    <div class="media-content">
+                        <div class="media-title">Add Audio</div>
+                        <div class="media-desc">Include a voice message or song</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="button" class="btn btn-secondary" id="skipBtn">Skip</button>
+                <button type="button" class="btn btn-primary" id="nextBtn" disabled>Next</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedMediaType = null;
+        const mediaButtons = document.querySelectorAll('.media-btn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        mediaButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                mediaButtons.forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedMediaType = this.dataset.type;
+                nextBtn.disabled = false;
+            });
+        });
+
+        nextBtn.addEventListener('click', function() {
+            if (selectedMediaType) {
+                localStorage.setItem('mediaType', selectedMediaType);
+                window.location.href = 'page3.html';
+            }
+        });
+
+        document.getElementById('skipBtn').addEventListener('click', function() {
+            localStorage.setItem('mediaType', 'none');
+            window.location.href = 'page4.html';
+        });
+    </script>
+</body>
+</html>
