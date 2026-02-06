@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Media - Step 3</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #FFF8E7 0%, #FAF0E6 50%, #FFE8E8 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .floating-icon {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.15;
+            animation: float 15s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        .heart1 { left: 10%; top: 20%; animation-delay: 0s; }
+        .heart2 { left: 80%; top: 15%; animation-delay: 2s; font-size: 2.5rem; }
+        .heart3 { left: 15%; top: 70%; animation-delay: 4s; }
+        .gift1 { left: 70%; top: 60%; animation-delay: 1s; font-size: 2.2rem; }
+        .gift2 { left: 25%; top: 40%; animation-delay: 3s; }
+        .teddy1 { left: 85%; top: 80%; animation-delay: 2.5s; }
+        .teddy2 { left: 5%; top: 50%; animation-delay: 1.5s; font-size: 2.3rem; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-30px) rotate(5deg); }
+            50% { transform: translateY(-60px) rotate(-5deg); }
+            75% { transform: translateY(-30px) rotate(3deg); }
+        }
+
+        .container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 20px 60px rgba(128, 0, 32, 0.15);
+            max-width: 700px;
+            width: 100%;
+            border: 1px solid rgba(232, 180, 184, 0.3);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #800020;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #A0153E;
+            margin-bottom: 2.5rem;
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+
+        .preview-container {
+            background: rgba(255, 248, 231, 0.5);
+            border: 2px dashed #E8B4B8;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preview-placeholder {
+            text-align: center;
+            color: #B76E79;
+        }
+
+        .preview-placeholder-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .preview-placeholder-text {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .preview-content {
+            max-width: 100%;
+            max-height: 350px;
+            display: none;
+        }
+
+        .preview-content.show {
+            display: block;
+        }
+
+        .preview-content img {
+            max-width: 100%;
+            max-height: 350px;
+            border-radius: 12px;
+            object-fit: contain;
+        }
+
+        .preview-content video {
+            max-width: 100%;
+            max-height: 350px;
+            border-radius: 12px;
+        }
+
+        .preview-content audio {
+            width: 100%;
+        }
+
+        .upload-section {
+            margin-bottom: 2rem;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+        }
+
+        .file-input-label {
+            display: block;
+            padding: 1.25rem 2rem;
+            background: linear-gradient(135deg, rgba(160, 21, 62, 0.1) 0%, rgba(128, 0, 32, 0.1) 100%);
+            border: 2px solid #E8B4B8;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #800020;
+            font-weight: 500;
+        }
+
+        .file-input-label:hover {
+            background: rgba(232, 180, 184, 0.3);
+            border-color: #B76E79;
+            transform: translateY(-2px);
+        }
+
+        .file-input-label .icon {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+
+        input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .file-name {
+            margin-top: 0.75rem;
+            text-align: center;
+            color: #A0153E;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2.5rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.3s, background 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #A0153E 0%, #800020 100%);
+            color: #FFF8E7;
+            box-shadow: 0 4px 15px rgba(160, 21, 62, 0.3);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(160, 21, 62, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: rgba(232, 180, 184, 0.4);
+            color: #800020;
+            border: 2px solid #E8B4B8;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(232, 180, 184, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .step-indicator {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #B76E79;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            color: #A0153E;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        @media (max-width: 640px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .form-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .preview-container {
+                min-height: 250px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Valentine Icons -->
+    <div class="floating-icon heart1">❤️</div>
+    <div class="floating-icon heart2">💕</div>
+    <div class="floating-icon heart3">💖</div>
+    <div class="floating-icon gift1">🎁</div>
+    <div class="floating-icon gift2">🎀</div>
+    <div class="floating-icon teddy1">🧸</div>
+    <div class="floating-icon teddy2">🧸</div>
+
+    <div class="container">
+        <div class="form-card">
+            <div class="step-indicator">Step 3 of 4</div>
+            <h1>Upload Your Media</h1>
+            <p class="subtitle" id="mediaTypeText">Upload your selected media file</p>
+
+            <div class="preview-container" id="previewContainer">
+                <div class="preview-placeholder" id="placeholder">
+                    <div class="preview-placeholder-icon" id="placeholderIcon">📁</div>
+                    <div class="preview-placeholder-text">No file selected</div>
+                </div>
+                <div class="preview-content" id="previewContent"></div>
+            </div>
+
+            <div class="upload-section">
+                <div class="file-input-wrapper">
+                    <label for="fileInput" class="file-input-label">
+                        <span class="icon">📤</span>
+                        <span id="uploadText">Choose File</span>
+                    </label>
+                    <input type="file" id="fileInput" accept="">
+                </div>
+                <div class="file-name" id="fileName"></div>
+            </div>
+
+            <div class="loading" id="loading">Submitting...</div>
+
+            <div class="button-group">
+                <button type="button" class="btn btn-secondary" id="backBtn">Back</button>
+                <button type="button" class="btn btn-primary" id="nextBtn" disabled>Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const mediaType = localStorage.getItem('mediaType') || 'image';
+        const fileInput = document.getElementById('fileInput');
+        const previewContainer = document.getElementById('previewContainer');
+        const previewContent = document.getElementById('previewContent');
+        const placeholder = document.getElementById('placeholder');
+        const placeholderIcon = document.getElementById('placeholderIcon');
+        const fileName = document.getElementById('fileName');
+        const nextBtn = document.getElementById('nextBtn');
+        const loading = document.getElementById('loading');
+        const mediaTypeText = document.getElementById('mediaTypeText');
+        const uploadText = document.getElementById('uploadText');
+
+        // Set file input accept attribute and UI text based on media type
+        const mediaConfig = {
+            image: {
+                accept: 'image/*',
+                icon: '🖼️',
+                text: 'Upload your image file',
+                uploadText: 'Choose Image'
+            },
+            video: {
+                accept: 'video/*',
+                icon: '🎥',
+                text: 'Upload your video file',
+                uploadText: 'Choose Video'
+            },
+            audio: {
+                accept: 'audio/*',
+                icon: '🎵',
+                text: 'Upload your audio file',
+                uploadText: 'Choose Audio'
+            }
+        };
+
+        const config = mediaConfig[mediaType];
+        fileInput.accept = config.accept;
+        placeholderIcon.textContent = config.icon;
+        mediaTypeText.textContent = config.text;
+        uploadText.textContent = config.uploadText;
+
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            fileName.textContent = file.name;
+            nextBtn.disabled = false;
+
+            // Show preview based on media type
+            placeholder.style.display = 'none';
+            previewContent.innerHTML = '';
+            previewContent.classList.add('show');
+
+            if (mediaType === 'image') {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                previewContent.appendChild(img);
+            } else if (mediaType === 'video') {
+                const video = document.createElement('video');
+                video.controls = true;
+                video.src = URL.createObjectURL(file);
+                previewContent.appendChild(video);
+            } else if (mediaType === 'audio') {
+                const audio = document.createElement('audio');
+                audio.controls = true;
+                audio.src = URL.createObjectURL(file);
+                previewContent.appendChild(audio);
+            }
+
+            // Store file data in localStorage
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                localStorage.setItem('mediaFile', JSON.stringify({
+                    name: file.name,
+                    type: file.type,
+                    data: event.target.result
+                }));
+            };
+            reader.readAsDataURL(file);
+        });
+
+        nextBtn.addEventListener('click', async function() {
+            const messages = JSON.parse(localStorage.getItem('valentineMessages') || '{}');
+            const mediaFile = JSON.parse(localStorage.getItem('mediaFile') || '{}');
+
+            const formData = {
+                messages: messages,
+                mediaType: mediaType,
+                mediaFile: {
+                    name: mediaFile.name,
+                    type: mediaFile.type
+                }
+            };
+
+            loading.classList.add('show');
+            nextBtn.disabled = true;
+
+            try {
+                // Dummy API call
+                const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+                console.log('API Response:', result);
+
+                // Navigate to final page
+                setTimeout(() => {
+                    window.location.href = 'page4.html';
+                }, 500);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Submission successful! Proceeding to preview...');
+                window.location.href = 'page4.html';
+            }
+        });
+
+        document.getElementById('backBtn').addEventListener('click', function() {
+            window.location.href = 'page2.html';
+        });
+    </script>
+</body>
+</html>
