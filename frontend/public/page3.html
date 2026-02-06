@@ -201,21 +201,38 @@
             border: none;
             border-radius: 50px;
             font-size: 1rem;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.3s, background 0.3s;
-            font-family: 'Inter', sans-serif;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #A0153E 0%, #800020 100%);
-            color: #FFF8E7;
-            box-shadow: 0 4px 15px rgba(160, 21, 62, 0.3);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: #fff;
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.4);
         }
 
         .btn-primary:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(160, 21, 62, 0.4);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 35px rgba(245, 87, 108, 0.5);
         }
 
         .btn-primary:disabled {
@@ -224,14 +241,15 @@
         }
 
         .btn-secondary {
-            background: rgba(232, 180, 184, 0.4);
-            color: #800020;
-            border: 2px solid #E8B4B8;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.4);
         }
 
         .btn-secondary:hover {
-            background: rgba(232, 180, 184, 0.6);
-            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            border-color: rgba(255, 255, 255, 0.6);
         }
 
         .btn:active {
@@ -241,17 +259,19 @@
         .step-indicator {
             text-align: center;
             margin-bottom: 1.5rem;
-            color: #B76E79;
+            color: rgba(255, 255, 255, 0.8);
             font-size: 0.85rem;
-            font-weight: 500;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .loading {
             display: none;
             text-align: center;
-            color: #A0153E;
+            color: rgba(255, 255, 255, 0.9);
             margin-top: 1rem;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .loading.show {
