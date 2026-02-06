@@ -13,8 +13,8 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #FFF8E7 0%, #FAF0E6 50%, #FFE8E8 100%);
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
@@ -23,9 +23,10 @@
         .floating-icon {
             position: absolute;
             font-size: 2rem;
-            opacity: 0.15;
-            animation: float 15s infinite ease-in-out;
+            opacity: 0.2;
+            animation: float 12s infinite ease-in-out;
             pointer-events: none;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
         }
 
         .heart1 { left: 10%; top: 20%; animation-delay: 0s; }
@@ -37,10 +38,10 @@
         .teddy2 { left: 5%; top: 50%; animation-delay: 1.5s; font-size: 2.3rem; }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            25% { transform: translateY(-30px) rotate(5deg); }
-            50% { transform: translateY(-60px) rotate(-5deg); }
-            75% { transform: translateY(-30px) rotate(3deg); }
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            25% { transform: translateY(-40px) rotate(8deg) scale(1.05); }
+            50% { transform: translateY(-80px) rotate(-8deg) scale(0.95); }
+            75% { transform: translateY(-40px) rotate(5deg) scale(1.02); }
         }
 
         .container {
